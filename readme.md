@@ -4,7 +4,7 @@
 
 # Screenshot
 
-![An screenshot of Pony Foo Weekly Browser Extension][screenshot]
+[![An screenshot of Pony Foo Weekly Browser Extension][screenshot]][cws]
 
 # Install from GitHub
 
