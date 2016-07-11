@@ -1,0 +1,50 @@
+{
+  "name": "ponyfooweekly-extension",
+  "version": "1.0.1",
+  "description": "Browser extension to easily submit link suggestions to Pony Foo Weekly",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ponyfoo/ponyfooweekly-extension.git"
+  },
+  "author": "Nicolás Bevacqua <nico@ponyfoo.com> (https://ponyfoo.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ponyfoo/ponyfooweekly-extension/issues"
+  },
+  "homepage": "https://github.com/ponyfoo/ponyfooweekly-extension",
+  "scripts": {
+    "copy": "build/copy",
+    "start": "build/build-development",
+    "build": "build/build-production"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "dominus": "6.0.1",
+    "lodash": "4.13.1",
+    "normalize.css": "4.2.0",
+    "raf": "3.2.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "6.9.0",
+    "babelify": "7.3.0",
+    "browserify": "13.0.1",
+    "bundle-collapser": "1.2.1",
+    "clean-css": "3.4.18",
+    "font-awesome-stylus": "4.6.2",
+    "nib": "1.1.0",
+    "stylus": "0.54.5",
+    "uglify-js": "2.7.0",
+    "watchify": "3.7.0"
+  }
+}

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf extension/{js,css,fonts}
+mkdir -p extension/{js,css,fonts}
+cp -r ../ponyfoo/node_modules/font-awesome-stylus/fonts extension

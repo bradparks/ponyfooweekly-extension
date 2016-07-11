@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Pony Foo Weekly Link Submissions</title>
+    <link rel='stylesheet' type='text/css' href='/css/popup.css'>
+  </head>
+  <body class='ly-custom-heading ly-custom-subheading'>
+    <main class='ly-main pm-main'>
+      <header class='ph-header'>
+        <a href='https://ponyfoo.com' class='ph-logo-link' target='_blank' title='Visit Pony Foo!'>
+          <img class='ph-logo' src='/icon-512x512.png' alt='' />
+        </a>
+        <h1 class='ph-title'>Pony Foo Weekly Link Submissions</h1>
+        <a class='fa fa-remove ph-close pp-close'></a>
+      </header>
+      <article class='tt-details st-section uv-hidden'>
+        <header class='st-description'>Enter your personal details. You can change them later.</header>
+        <section class='fm-container'>
+          <div class='fm-field'>
+            <label for='tt-name'>Your Name</label>
+            <input id='tt-name' placeholder='Nicholas Cage' />
+          </div>
+          <div class='fm-field'>
+            <label for='tt-email'>Your Email</label>
+            <input id='tt-email' placeholder='cage@awesome.com' type='email' />
+          </div>
+        </section>
+        <footer class='st-actions st-actions-full'>
+          <a class='lk-link lk-black tt-cancel st-button-secondary uv-hidden'>Cancel</a>
+          <a class='bt-button bt-pink tt-save'><span class='bt-text'>Save</span></a>
+        </footer>
+      </article>
+      <article class='ss-details st-section uv-hidden'>
+        <section>
+          <header class='ss-url'></header>
+
+          <div class='fm-field'>
+            <label for='ss-title'>Link Title</label>
+            <input id='ss-title' class='wa-link-title' placeholder='What would you like the link title to be?' />
+          </div>
+
+          <div class='fm-field wa-input-50'>
+            <label for='ss-source-name'>Source’s Name</label>
+            <input id='ss-source-name' class='wa-link-source' placeholder='Known author or source for this link?' />
+          </div><!--
+       --><div class='fm-field wa-input-50'>
+            <label for='ss-source-website'>Source’s Website</label>
+            <input id='ss-source-website' class='wa-link-source-href' placeholder='Source or author’s Twitter profile' />
+          </div>
+
+          <div class='fm-field'>
+            <label for='ss-image'>Thumbnail Image</label>
+            <div class='wa-link-image-container'>
+              <input id='ss-image' class='wa-link-image' placeholder='Link to an image we can display alongside the description' />
+              <span class='wa-link-image-preview-container'>
+                <img class='wa-link-image-preview uv-hidden' alt='' />
+                <span class='wa-toggler wa-link-image-left fa fa-arrow-left uv-hidden'></span>
+                <span class='wa-toggler wa-link-image-right fa fa-arrow-right uv-hidden'></span>
+              </span>
+            </div>
+          </div>
+
+          <div class='fm-field'>
+            <label for='ss-description'>Link Description</label>
+            <textarea id='ss-description' class='wa-link-description' placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.'></textarea>
+          </div>
+
+          <div class='fm-field'>
+            <label for='ss-comments'>Your Comments</label>
+            <textarea id='ss-comments' class='wa-submitter-comments' placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.'></textarea>
+          </div>
+        </section>
+
+        <section class='fm-field'>
+          <label>Submission Preview</label>
+          <div class='wu-preview-link-container ss-preview-container'>
+            <div class='table-unobtrusive wu-preview-link'></div>
+          </div>
+        </section>
+
+        <footer class='st-actions'>
+          <span class='st-actions-left'>
+            <a class='lk-link lk-black ss-profile st-button-left'><i class='fa fa-cog'></i> Update Profile?</a>
+          </span><!--
+       --><span class='st-actions-right'>
+            <a class='lk-link lk-black pp-close st-button-secondary'>Cancel</a>
+            <a class='bt-button bt-pink ss-submit'><span class='bt-text'>Submit</span></a>
+          </span>
+        </footer>
+      </article>
+      <article class='sx-success st-section uv-hidden'>
+        <header class='st-description'>We got your submission!</header>
+        <section class='sx-greetings'>
+          <div>Thanks for sharing your link with us.</div>
+          <div>You’ll be promptly receiving an email where we can start a conversation.</div>
+        </section>
+        <footer class='st-actions'>
+          <section class='sx-links st-actions-left'>
+            <a class='lk-rainbows sl-link sl-facebook' href='https://facebook.com/ponyfoo' target='_blank' title='Like us on Facebook!'><i class='fa fa-facebook'></i></a>
+            <span> </span>
+            <a class='lk-rainbows sl-link sl-twitter' href='https://twitter.com/ponyfoo' target='_blank' title='Follow us on Twitter!'><i class='fa fa-twitter'></i></a>
+            <span> </span>
+            <a class='lk-rainbows' href='https://ponyfoo.com' target='_blank'>ponyfoo.com</a>
+          </section><!--
+       --><section class='st-actions-right'>
+            <a class='bt-button bt-pink pp-close'><span class='bt-text'>Awesome!</span></a>
+          </section>
+        </footer>
+      </article>
+      <article class='fx-failure st-section uv-hidden'>
+        <header class='st-description'>Oops! There was some trouble getting your submission through.</header>
+        <ul class='fx-messages'></ul>
+        <footer class='st-actions'>
+          <section class='sx-links st-actions-left'>
+            <a class='lk-rainbows sl-link sl-facebook' href='https://facebook.com/ponyfoo' target='_blank' title='Like us on Facebook!'><i class='fa fa-facebook'></i></a>
+            <span> </span>
+            <a class='lk-rainbows sl-link sl-twitter' href='https://twitter.com/ponyfoo' target='_blank' title='Follow us on Twitter!'><i class='fa fa-twitter'></i></a>
+            <span> </span>
+            <a class='lk-rainbows' href='https://ponyfoo.com' target='_blank'>ponyfoo.com</a>
+          </section><!--
+       --><section class='st-actions-right'>
+            <a class='lk-link lk-black pp-close'>Close</a>
+            <a class='bt-button bt-pink fx-back'><span class='bt-text'>Back</span></a>
+          </section>
+        </footer>
+      </article>
+      <script src='/js/popup.js'></script>
+    </main>
+  </body>
+</html>

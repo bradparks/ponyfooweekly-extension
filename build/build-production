@@ -1,0 +1,27 @@
+#!/bin/bash
+
+browserify_alone() {
+  browserify $1 \
+    --plugin bundle-collapser/plugin \
+    | uglifyjs \
+      --mangle \
+      --compress "comparisons=false,keep_fargs=true,unsafe=true,unsafe_comps=true,warnings=false" \
+      --beautify "ascii_only=true,beautify=false" \
+      --output $2
+}
+
+npm run copy
+
+echo '{"serviceAuthority":"https://ponyfoo.com"}' > extension/client/js/environment.json
+
+browserify_alone "extension/client/js/popup.js" "extension/js/popup.js"
+
+stylus extension/client/css/popup.styl \
+  -o extension/css \
+  --include-css \
+  --include extension/css \
+  --include ../ponyfoo \
+  --include ../ponyfoo/client/css \
+  --compress
+
+cleancss extension/css/popup.css -o extension/css/popup.css --s0

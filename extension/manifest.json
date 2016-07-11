@@ -1,0 +1,23 @@
+{
+  "name": "Pony Foo Weekly Link Submissions",
+  "version": "1.0.1",
+  "description": "Easily submit link suggestions to Pony Foo Weekly",
+  "homepage_url": "https://github.com/ponyfoo/ponyfooweekly-extension",
+  "manifest_version": 2,
+  "minimum_chrome_version": "48",
+  "browser_action": {
+    "default_icon": "icon-512x512.png",
+    "default_popup": "popup.html",
+    "default_title": "Submit to Pony Foo Weekly"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "http://localhost:3000/*",
+    "https://ponyfoo.com/*"
+  ],
+  "icons": {
+    "128": "icon-128x128.png",
+    "512": "icon-512x512.png"
+  }
+}
