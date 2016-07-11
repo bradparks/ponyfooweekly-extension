@@ -1,5 +1,4 @@
 'use strict';
-
 var $ = require('dominus');
 var raf = require('raf');
 var debounce = require('lodash/debounce');
@@ -14,7 +13,7 @@ var submitterCached = null;
 on(document, 'DOMContentLoaded', loaded);
 
 function loaded () {
-  chrome.storage.sync.get(['submitter'], ready);
+  getStorage().get(['submitter'], ready);
 }
 
 function ready (items) {
@@ -43,7 +42,7 @@ function closePopup () {
 }
 
 function showSubmitter () {
-  chrome.storage.sync.get(['submitter'], readySubmitter);
+  getStorage().get(['submitter'], readySubmitter);
 }
 
 function readySubmitter (items) {
@@ -64,7 +63,7 @@ function saveSubmitter () {
     email: email
   };
   var changes = { submitter: submitter };
-  chrome.storage.sync.set(changes, showSubmission);
+  getStorage().set(changes, showSubmission);
 }
 
 function showSubmission () {
@@ -312,6 +311,7 @@ function updatePreview (err) {
   }
 
   function renderError (err) {
+    console.log('The error was:', err);
     render('<pre class="wa-error">' + parseError(err) + '</pre>');
   }
 
@@ -324,4 +324,8 @@ function updatePreview (err) {
   function render (html) {
     $('.wu-preview-link').html(html);
   }
+}
+
+function getStorage () {
+  return chrome.storage.sync || chrome.storage.local;
 }
