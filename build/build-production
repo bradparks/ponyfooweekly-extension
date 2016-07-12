@@ -12,8 +12,6 @@ browserify_alone() {
 
 npm run copy
 
-echo '{"serviceAuthority":"https://ponyfoo.com"}' > extension/client/js/environment.json
-
 browserify_alone "extension/client/js/popup.js" "extension/js/popup.js"
 
 stylus extension/client/css/popup.styl \

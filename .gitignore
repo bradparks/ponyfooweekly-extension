@@ -1,5 +1,4 @@
 node_modules
-extension/client/js/environment.json
 extension/js
 extension/css
 extension/fonts

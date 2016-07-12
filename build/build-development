@@ -2,8 +2,6 @@
 
 npm run copy
 
-echo '{"serviceAuthority":"http://localhost:3000"}' > extension/client/js/environment.json
-
 watchify extension/client/js/popup.js -o extension/js/popup.js --debug --verbose &
 
 stylus extension/client/css/popup.styl \

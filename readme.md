@@ -23,11 +23,16 @@ From [Chrome Web Store][cws], or just clone this repository and load the `extens
 
 From [addons.mozilla.org][amo].
 
+# Install for Opera
+
+From [addons.opera.com][aoc].
+
 # License
 
 MIT
 
 [cws]: https://chrome.google.com/webstore/detail/pony-foo-weekly-link-subm/ldiaebhociegnbdjbkfbhbpebeiamldi
 [amo]: https://addons.mozilla.org/en-US/firefox/addon/ponyfooweekly/
+[aoc]: https://addons.opera.com/en/extensions/details/pony-foo-weekly-link-submissions/
 [pf]: https://github.com/ponyfoo/ponyfoo
 [screenshot]: https://github.com/ponyfoo/ponyfooweekly-extension/blob/master/screenshots/main.png
