@@ -13,7 +13,7 @@ var submitterCached = null;
 on(document, 'DOMContentLoaded', loaded);
 
 function loaded () {
-  getStorage().get(['submitter'], ready);
+  getBestStorage().get(['submitter'], ready);
 }
 
 function ready (items) {
@@ -42,7 +42,7 @@ function closePopup () {
 }
 
 function showSubmitter () {
-  getStorage().get(['submitter'], readySubmitter);
+  getBestStorage().get(['submitter'], readySubmitter);
 }
 
 function readySubmitter (items) {
@@ -63,7 +63,7 @@ function saveSubmitter () {
     email: email
   };
   var changes = { submitter: submitter };
-  getStorage().set(changes, showSubmission);
+  getBestStorage().set(changes, showSubmission);
 }
 
 function showSubmission () {
@@ -77,7 +77,7 @@ function showSubmissionSection () {
 }
 
 function gotTabUrl (url) {
-  $('.ss-url').text(url.replace(rprotocol, '')).attr('data-url', url);
+  $('.ss-url').text(prettifyUrl(url)).attr('data-url', url);
   fetch(env.serviceAuthority + '/api/metadata/scrape?url=' + encodeURIComponent(url))
     .then(response => response.json())
     .then(data => scraped(url, data))
@@ -130,7 +130,7 @@ function scraped (url, data) {
   updatePreview();
 
   function updateInputs () {
-    $('.wa-link-title', $container).value(data.title || url.replace(rprotocol, ''));
+    $('.wa-link-title', $container).value(data.title || prettifyUrl(url));
     $('.wa-link-description', $container).value(description);
     $('.wa-link-source', $container).value(data.source || '');
     $('.wa-link-source-href', $container).value(sourceHref);
@@ -317,7 +317,7 @@ function updatePreview (err) {
 
   function parseError (err) {
     var text = String(err.stack || err.message || err);
-    var rextensionurl = /chrome-extension:\/\/[a-z]+/ig;
+    var rextensionurl = /[a-z]*-?extension:\/\/[a-z]+/ig;
     return text.replace(rextensionurl, 'ext://');
   }
 
@@ -326,6 +326,15 @@ function updatePreview (err) {
   }
 }
 
-function getStorage () {
+function getBestStorage () {
   return chrome.storage.sync || chrome.storage.local;
+}
+
+function prettifyUrl (url) {
+  var rextensionurl = /^[a-z]*-?extension:\/\/[a-z]+/i;
+  var rtrailingslash = /\/$/;
+  return url
+    .replace(rprotocol, '')
+    .replace(rextensionurl, '')
+    .replace(rtrailingslash, '');
 }

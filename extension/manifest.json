@@ -1,6 +1,6 @@
 {
   "name": "Pony Foo Weekly Link Submissions",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Easily submit link suggestions to Pony Foo Weekly",
   "homepage_url": "https://github.com/ponyfoo/ponyfooweekly-extension",
   "manifest_version": 2,
@@ -9,6 +9,11 @@
     "default_icon": "icon-512x512.png",
     "default_popup": "popup.html",
     "default_title": "Submit to Pony Foo Weekly"
+  },
+  "applications": {
+    "gecko": {
+      "id": "extensions@ponyfoo.com"
+    }
   },
   "permissions": [
     "activeTab",
