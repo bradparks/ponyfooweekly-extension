@@ -44,15 +44,19 @@
           <div class='fm-field'>
             <label for='ss-title'>Link Title</label>
             <input id='ss-title' class='wa-link-title' placeholder='What would you like the link title to be?' />
+            <a title='Pull the title from the page’s title!' class='fm-title-picker wa-toggler fa fa-font'></a>
+            <a title='Pull the title from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
           </div>
 
           <div class='fm-field wa-input-50'>
             <label for='ss-source-name'>Source’s Name</label>
             <input id='ss-source-name' class='wa-link-source' placeholder='Known author or source for this link?' />
+            <a title='Pull the source’s name from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
           </div><!--
        --><div class='fm-field wa-input-50'>
             <label for='ss-source-website'>Source’s Website</label>
             <input id='ss-source-website' class='wa-link-source-href' placeholder='Source or author’s Twitter profile' />
+            <a title='Pull the source’s website from an element on the page!' class='fm-picker wa-toggler fa fa-magic' data-attr='href' data-selector='a'></a>
           </div>
 
           <div class='fm-field'>
@@ -63,6 +67,7 @@
                 <img class='wa-link-image-preview uv-hidden' alt='' />
                 <span class='wa-toggler wa-link-image-left fa fa-arrow-left uv-hidden'></span>
                 <span class='wa-toggler wa-link-image-right fa fa-arrow-right uv-hidden'></span>
+                <a title='Pull a thumbnail image from an element on the page!' class='fm-picker fm-picker-image wa-toggler fa fa-magic' data-attr='src' data-selector='img'></a>
               </span>
             </div>
           </div>
@@ -70,6 +75,7 @@
           <div class='fm-field'>
             <label for='ss-description'>Link Description</label>
             <textarea id='ss-description' class='wa-link-description' placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.'></textarea>
+            <a title='Pull a description from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
           </div>
 
           <div class='fm-field'>

@@ -1,4 +1,5 @@
 'use strict';
+
 var $ = require('dominus');
 var raf = require('raf');
 var debounce = require('lodash/debounce');
@@ -13,6 +14,7 @@ var postHeightToContentSlowly = raf.bind(null, debounce(postHeightToContent, 100
 var submitterCached = null;
 var q = omnibox.parse(location.search.slice(1));
 var url = q.url;
+var pickerTarget = null;
 
 $('.ss-url').text(prettifyUrl(url)).attr('data-url', url);
 $('.pp-close').on('click', closePopup);
@@ -49,6 +51,15 @@ function readContentMessage (e) {
   if (data.command === 'ask-to-resize') {
     postHeightToContent();
   }
+  if (data.command === 'has-picked') {
+    completeFromPicker(data.value);
+  }
+  if (data.command === 'has-picked-title') {
+    completeFromPicker(data.value);
+  }
+  if (data.command === 'end-pick') {
+    endMagicPick();
+  }
 }
 
 function readEventData (data) {
@@ -79,12 +90,45 @@ function ready (items) {
   $('.ss-submit').on('click', submit);
 
   $('.ss-details')
-    .on('change keypress keydown paste input', '.wa-link-image', updateThumbnailImage)
+    .on('change keypress keydown paste input', '.wa-link-image', updateThumbnail)
     .on('change keypress keydown paste input', 'input,textarea,select', updatePreviewSlowly);
+
+  $('.fm-picker').on('click', beginMagicPick);
+  $('.fm-title-picker').on('click', beginTitleMagicPick);
 }
 
 function closePopup () {
   postToContent({ command: 'close-popup' });
+}
+
+function beginMagicPick (e) {
+  const button = $(e.target);
+  pickerTarget = button.parents('.fm-field').find('input,textarea');
+  postToContent({
+    command: 'begin-pick',
+    options: {
+      selector: button.attr('data-selector'),
+      attr: button.attr('data-attr')
+    }
+  });
+}
+
+function beginTitleMagicPick () {
+  pickerTarget = $('.wa-link-title');
+  postToContent({ command: 'ask-for-title' });
+}
+
+function completeFromPicker (value) {
+  if (pickerTarget) {
+    pickerTarget.value(value);
+    pickerTarget = null;
+    updateThumbnail();
+    updatePreview();
+  }
+}
+
+function endMagicPick () {
+  pickerTarget = null;
 }
 
 function postToContent (data) {
@@ -164,11 +208,6 @@ function on (el, type, fn) {
 
 function noop () {}
 
-function updateThumbnailImage () {
-  var $container = $('.ss-details');
-  updateThumbnail($container);
-}
-
 function scraped (url, data) {
   var $container = $('.ss-details');
   var firstImage = data.images && data.images[0] || '';
@@ -179,7 +218,7 @@ function scraped (url, data) {
 
   updateInputs();
   updateImageSwapper();
-  updateThumbnail($container);
+  updateThumbnail();
   updatePreview();
 
   function updateInputs () {
@@ -205,7 +244,7 @@ function scraped (url, data) {
   }
 
   function swapperOn () {
-    var toggler = $('.wa-toggler', imageInputContainer);
+    var toggler = $('.wa-link-image-left,.wa-link-image-right', imageInputContainer);
     var togglerLeft = $('.wa-link-image-left', imageInputContainer);
     var togglerRight = $('.wa-link-image-right', imageInputContainer);
     var index = 0;
@@ -226,7 +265,7 @@ function scraped (url, data) {
       imageInput.value(data.images[index] || '');
       invalidate(-1, togglerLeft);
       invalidate(1, togglerRight);
-      updateThumbnail($container);
+      updateThumbnail();
       updatePreview();
     }
 
@@ -259,7 +298,8 @@ function scraped (url, data) {
   }
 }
 
-function updateThumbnail ($container) {
+function updateThumbnail () {
+  var $container = $('.ss-details');
   var $image = $('.wa-link-image', $container);
   var $imagePreview = $('.wa-link-image-preview', $container);
   var imageValue = $image.value().trim();
