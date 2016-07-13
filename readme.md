@@ -2,9 +2,11 @@
 
 > Browser extension to easily submit link suggestions to Pony Foo Weekly
 
-# Screenshot
+# Screenshots
 
 [![An screenshot of Pony Foo Weekly Browser Extension][screenshot]][cws]
+
+[![Another screenshot of Pony Foo Weekly Browser Extension][screenshot2]][cws]
 
 # Install from GitHub
 
@@ -35,4 +37,5 @@ MIT
 [amo]: https://addons.mozilla.org/en-US/firefox/addon/ponyfooweekly/
 [aoc]: https://addons.opera.com/en/extensions/details/pony-foo-weekly-link-submissions/
 [pf]: https://github.com/ponyfoo/ponyfoo
-[screenshot]: https://github.com/ponyfoo/ponyfooweekly-extension/blob/master/screenshots/main.png
+[screenshot]: https://github.com/ponyfoo/ponyfooweekly-extension/blob/master/screenshots/login.png
+[screenshot2]: https://github.com/ponyfoo/ponyfooweekly-extension/blob/master/screenshots/main.png

@@ -1,6 +1,6 @@
 {
   "name": "Pony Foo Weekly Link Submissions",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Easily submit link suggestions to Pony Foo Weekly",
   "homepage_url": "https://github.com/ponyfoo/ponyfooweekly-extension",
   "manifest_version": 2,
@@ -28,7 +28,8 @@
   },
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "https://ponyfoo.com/*"
   ],
   "icons": {
     "128": "icon-128x128.png",
