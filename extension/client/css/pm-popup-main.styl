@@ -5,11 +5,25 @@ body:before
   padding 20px
   width 500px
 
-  &:before
+  &:before,
+  &:after
     position fixed
     top 0
-    bottom 0
-    right 0
-    width 4px
+    left 0
     content ''
-    background linear-gradient(to bottom, c-white 0, c-yellow-highlight 33%, c-dark-orange 66%, c-pink 100%)
+
+  &:before
+    right 0
+    height 4px
+    background linear-gradient(to left, c-white 0, c-yellow-highlight 33%, c-dark-orange 66%, c-pink 100%)
+
+  &:after
+    bottom 0
+    width 4px
+    background linear-gradient(to top, c-white 0, c-yellow-highlight 33%, c-dark-orange 66%, c-pink 100%)
+
+.pm-minimized .st-section
+  display none !important
+
+.pm-no-overflow
+  overflow hidden

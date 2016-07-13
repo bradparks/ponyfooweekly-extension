@@ -13,6 +13,8 @@ browserify_alone() {
 npm run copy
 
 browserify_alone "extension/client/js/popup.js" "extension/js/popup.js"
+browserify_alone "extension/client/js/content.js" "extension/js/content.js"
+browserify_alone "extension/client/js/background.js" "extension/js/background.js"
 
 stylus extension/client/css/popup.styl \
   -o extension/css \

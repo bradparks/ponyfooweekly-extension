@@ -3,6 +3,8 @@
 npm run copy
 
 watchify extension/client/js/popup.js -o extension/js/popup.js --debug --verbose &
+watchify extension/client/js/content.js -o extension/js/content.js --debug --verbose &
+watchify extension/client/js/background.js -o extension/js/background.js --debug --verbose &
 
 stylus extension/client/css/popup.styl \
   -o extension/css \

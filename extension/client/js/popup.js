@@ -2,18 +2,65 @@
 var $ = require('dominus');
 var raf = require('raf');
 var debounce = require('lodash/debounce');
+var omnibox = require('omnibox/querystring');
 var markdownService = require('../../../../ponyfoo/services/markdown');
 var weeklyCompilerService = require('../../../../ponyfoo/services/weeklyCompiler');
 var env = require('./environment.json');
 var rprotocol = /^https?:\/\/(www\.)?/i;
 var swappers = [];
 var updatePreviewSlowly = raf.bind(null, debounce(updatePreview.bind(null, null), 100));
+var postHeightToContentSlowly = raf.bind(null, debounce(postHeightToContent, 100));
 var submitterCached = null;
+var q = omnibox.parse(location.search.slice(1));
+var url = q.url;
 
+$('.ss-url').text(prettifyUrl(url)).attr('data-url', url);
+$('.pp-close').on('click', closePopup);
+$('.pp-minimize').on('click', () => popupMinimization(true));
+$('.pp-maximize').on('click', () => popupMinimization(false));
+
+on(window, 'message', readContentMessage);
 on(document, 'DOMContentLoaded', loaded);
+$('textarea').on('resize', postHeightToContentSlowly);
 
 function loaded () {
   getBestStorage().get(['submitter'], ready);
+}
+
+function popupMinimization (state) {
+  var on = state ? 'addClass' : 'removeClass';
+  var off = state ? 'removeClass' : 'addClass';
+  $('body')[on]('pm-no-overflow');
+  $('.pp-minimize')[on]('uv-hidden');
+  $('.pp-maximize')[off]('uv-hidden');
+  $('.pm-main')[on]('pm-minimized');
+  postToContent({ command: 'minimize', state });
+  postHeightToContent();
+}
+
+function readContentMessage (e) {
+  var data = readEventData(e.data);
+  if (!data) {
+    return;
+  }
+  if (data.command === 'minimize') {
+    popupMinimization(data.state);
+  }
+  if (data.command === 'ask-to-resize') {
+    postHeightToContent();
+  }
+}
+
+function readEventData (data) {
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    return null;
+  }
+}
+
+function postHeightToContent () {
+  postToContent({ command: 'resize', height: document.body.scrollHeight });
 }
 
 function ready (items) {
@@ -25,7 +72,6 @@ function ready (items) {
     showSubmission();
   }
 
-  $('.pp-close').on('click', closePopup);
   $('.tt-save').on('click', saveSubmitter);
   $('.tt-cancel').on('click', showSubmission);
   $('.fx-back').on('click', showSubmissionSection);
@@ -38,8 +84,14 @@ function ready (items) {
 }
 
 function closePopup () {
-  window.close();
+  postToContent({ command: 'close-popup' });
 }
+
+function postToContent (data) {
+  parent.postMessage(JSON.stringify(data), '*');
+}
+
+function noop () {}
 
 function showSubmitter () {
   getBestStorage().get(['submitter'], readySubmitter);
@@ -53,6 +105,7 @@ function readySubmitter (items) {
   $('.tt-cancel')[hasSubmitter ? 'removeClass' : 'addClass']('uv-hidden');
   $('#tt-name').value(hasSubmitter ? submitter.name : '');
   $('#tt-email').value(hasSubmitter ? submitter.email : '');
+  postHeightToContent();
 }
 
 function saveSubmitter () {
@@ -68,16 +121,16 @@ function saveSubmitter () {
 
 function showSubmission () {
   showSubmissionSection();
-  getCurrentTabUrl(gotTabUrl);
+  scrapeTab();
 }
 
 function showSubmissionSection () {
   $('.st-section').addClass('uv-hidden');
   $('.ss-details').removeClass('uv-hidden');
+  postHeightToContent();
 }
 
-function gotTabUrl (url) {
-  $('.ss-url').text(prettifyUrl(url)).attr('data-url', url);
+function scrapeTab () {
   fetch(env.serviceAuthority + '/api/metadata/scrape?url=' + encodeURIComponent(url))
     .then(response => response.json())
     .then(data => scraped(url, data))
@@ -273,6 +326,7 @@ function submit () {
     }
     $('.st-section').addClass('uv-hidden');
     $('.sx-success').removeClass('uv-hidden');
+    postHeightToContent();
   }
   function fetchFailure (reason) {
     console.log('The error was:', reason);
@@ -287,6 +341,7 @@ function submit () {
       .text(message)
       .appendTo(list)
     );
+    postHeightToContent();
   }
 }
 
@@ -323,6 +378,7 @@ function updatePreview (err) {
 
   function render (html) {
     $('.wu-preview-link').html(html);
+    postHeightToContent();
   }
 }
 
