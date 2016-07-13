@@ -5,7 +5,7 @@
   "homepage_url": "https://github.com/ponyfoo/ponyfooweekly-extension",
   "manifest_version": 2,
   "minimum_chrome_version": "48",
-  "applications": { "gecko": { "id": "extensions@ponyfoo.com" } },
+  "applications": { "gecko": { "id": "{eda6969c-9332-487b-a8c5-2967a25b7616}" } },
   "browser_action": {
     "default_icon": "icon-512x512.png"
   },
