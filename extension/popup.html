@@ -38,68 +38,70 @@
         </footer>
       </article>
       <article class='ss-details st-section uv-hidden'>
-        <section>
-          <header class='ss-url'></header>
-
-          <div class='fm-field'>
-            <label for='ss-title'>Link Title</label>
-            <input id='ss-title' class='wa-link-title' placeholder='What would you like the link title to be?' />
-            <a title='Pull the title from the page’s title!' class='fm-title-picker wa-toggler fa fa-font'></a>
-            <a title='Pull the title from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
-          </div>
-
-          <div class='fm-field wa-input-50'>
-            <label for='ss-source-name'>Source’s Name</label>
-            <input id='ss-source-name' class='wa-link-source' placeholder='Known author or source for this link?' />
-            <a title='Pull the source’s name from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
-          </div><!--
-       --><div class='fm-field wa-input-50'>
-            <label for='ss-source-website'>Source’s Website</label>
-            <input id='ss-source-website' class='wa-link-source-href' placeholder='Source or author’s Twitter profile' />
-            <a title='Pull the source’s website from an element on the page!' class='fm-picker wa-toggler fa fa-magic' data-attr='href' data-selector='a'></a>
-          </div>
-
-          <div class='fm-field'>
-            <label for='ss-image'>Thumbnail Image</label>
-            <div class='wa-link-image-container'>
-              <input id='ss-image' class='wa-link-image' placeholder='Link to an image we can display alongside the description' />
-              <span class='wa-link-image-preview-container'>
-                <img class='wa-link-image-preview uv-hidden' alt='' />
-                <span class='wa-toggler wa-link-image-left fa fa-arrow-left uv-hidden'></span>
-                <span class='wa-toggler wa-link-image-right fa fa-arrow-right uv-hidden'></span>
-                <a title='Pull a thumbnail image from an element on the page!' class='fm-picker fm-picker-image wa-toggler fa fa-magic' data-attr='src' data-selector='img'></a>
-              </span>
+        <header class='ss-url'></header>
+        <div class='ss-detail-loading ls-spinner fa fa-circle-o-notch fa-spin fa-3x fa-fw'></div>
+        <section class='ss-detail-fields uv-hidden'>
+          <section>
+            <div class='fm-field'>
+              <label for='ss-title'>Link Title</label>
+              <input id='ss-title' class='wa-link-title' placeholder='What would you like the link title to be?' />
+              <a title='Pull the title from the page’s title!' class='fm-title-picker wa-toggler fa fa-font'></a>
+              <a title='Pull the title from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
             </div>
-          </div>
 
-          <div class='fm-field'>
-            <label for='ss-description'>Link Description</label>
-            <textarea id='ss-description' class='wa-link-description' placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.'></textarea>
-            <a title='Pull a description from an element on the page!' class='fm-picker wa-toggler fa fa-magic' data-attr='html-markdown'></a>
-          </div>
+            <div class='fm-field wa-input-50'>
+              <label for='ss-source-name'>Source’s Name</label>
+              <input id='ss-source-name' class='wa-link-source' placeholder='Known author or source for this link?' />
+              <a title='Pull the source’s name from an element on the page!' class='fm-picker wa-toggler fa fa-magic'></a>
+            </div><!--
+         --><div class='fm-field wa-input-50'>
+              <label for='ss-source-website'>Source’s Website</label>
+              <input id='ss-source-website' class='wa-link-source-href' placeholder='Source or author’s Twitter profile' />
+              <a title='Pull the source’s website from an element on the page!' class='fm-picker wa-toggler fa fa-magic' data-attr='href' data-selector='a'></a>
+            </div>
 
-          <div class='fm-field'>
-            <label for='ss-comments'>Your Comments</label>
-            <textarea id='ss-comments' class='wa-submitter-comments' placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.'></textarea>
-          </div>
-        </section><!--
+            <div class='fm-field'>
+              <label for='ss-image'>Thumbnail Image</label>
+              <div class='wa-link-image-container'>
+                <input id='ss-image' class='wa-link-image' placeholder='Link to an image we can display alongside the description' />
+                <span class='wa-link-image-preview-container'>
+                  <img class='wa-link-image-preview uv-hidden' alt='' />
+                  <span class='wa-toggler wa-link-image-left fa fa-arrow-left uv-hidden'></span>
+                  <span class='wa-toggler wa-link-image-right fa fa-arrow-right uv-hidden'></span>
+                  <a title='Pull a thumbnail image from an element on the page!' class='fm-picker fm-picker-image wa-toggler fa fa-magic' data-attr='src' data-selector='img'></a>
+                </span>
+              </div>
+            </div>
 
-     --><section class='fm-field ss-preview-wrapper'>
-          <label>Submission Preview</label>
-          <div class='wu-preview-link-container ss-preview-container'>
-            <div class='table-unobtrusive wu-preview-link'></div>
-          </div>
-        </section><!--
+            <div class='fm-field'>
+              <label for='ss-description'>Link Description</label>
+              <textarea id='ss-description' class='wa-link-description' placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.'></textarea>
+              <a title='Pull a description from an element on the page!' class='fm-picker wa-toggler fa fa-magic' data-attr='html-markdown'></a>
+            </div>
 
-     --><footer class='st-actions'>
-          <span class='st-actions-left'>
-            <a class='lk-link lk-black ss-profile st-button-left'><i class='fa fa-cog'></i> Update Profile?</a>
-          </span><!--
-       --><span class='st-actions-right'>
-            <a class='lk-link lk-black pp-close st-button-secondary'>Cancel</a>
-            <a class='bt-button bt-pink ss-submit'><span class='bt-text'>Submit</span></a>
-          </span>
-        </footer>
+            <div class='fm-field'>
+              <label for='ss-comments'>Your Comments</label>
+              <textarea id='ss-comments' class='wa-submitter-comments' placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.'></textarea>
+            </div>
+          </section><!--
+
+       --><section class='fm-field ss-preview-wrapper'>
+            <label>Submission Preview</label>
+            <div class='wu-preview-link-container ss-preview-container'>
+              <div class='table-unobtrusive wu-preview-link'></div>
+            </div>
+          </section><!--
+
+       --><footer class='st-actions'>
+            <span class='st-actions-left'>
+              <a class='lk-link lk-black ss-profile st-button-left'><i class='fa fa-cog'></i> Update Profile?</a>
+            </span><!--
+         --><span class='st-actions-right'>
+              <a class='lk-link lk-black pp-close st-button-secondary'>Cancel</a>
+              <a class='bt-button bt-pink ss-submit'><span class='bt-text'>Submit</span></a>
+            </span>
+          </footer>
+        </div>
       </article>
       <article class='sx-success st-section uv-hidden'>
         <header class='st-description'>We got your submission!</header>

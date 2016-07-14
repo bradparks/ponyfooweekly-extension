@@ -67,6 +67,9 @@ function processMessage (command, data) {
   if (command === 'begin-pick') {
     createShade(data.options);
   }
+  if (command === 'cancel-pick') {
+    removeShade();
+  }
   if (command === 'ask-for-title') {
     postToFrame({ command: 'has-picked', value: document.title });
   }
@@ -156,7 +159,7 @@ function removeShade () {
     document.body.removeEventListener('mouseover', shadeover);
     document.body.removeEventListener('click', shadeclick);
     document.body.classList.remove('pfw-has-shade');
-    postToFrame({ command: 'end-pick' });
+    postToFrame({ command: 'cancel-pick' });
   }
 }
 

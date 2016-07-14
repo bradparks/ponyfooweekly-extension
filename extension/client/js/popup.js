@@ -23,6 +23,8 @@ $('.pp-maximize').on('click', () => popupMinimization(false));
 
 on(window, 'message', readContentMessage);
 on(document, 'DOMContentLoaded', loaded);
+on(document, 'keydown', readKey);
+
 $('textarea').on('resize', postHeightToContentSlowly);
 
 function loaded () {
@@ -57,8 +59,8 @@ function readContentMessage ({ data }) {
   if (command === 'has-picked-title') {
     completeFromPicker(value);
   }
-  if (command === 'end-pick') {
-    endMagicPick();
+  if (command === 'cancel-pick') {
+    cancelMagicPick();
   }
 }
 
@@ -127,7 +129,7 @@ function completeFromPicker (value) {
   }
 }
 
-function endMagicPick () {
+function cancelMagicPick () {
   pickerTarget = null;
 }
 
@@ -145,7 +147,7 @@ function readySubmitter (items) {
   const hasSubmitter = 'submitter' in items;
   const submitter = items.submitter;
   $('.st-section').addClass('uv-hidden');
-  $('.tt-details').removeClass('uv-hidden');
+  $('.tt-details').removeClass('uv-hidden').find('input,textarea').focus();
   $('.tt-cancel')[hasSubmitter ? 'removeClass' : 'addClass']('uv-hidden');
   $('#tt-name').value(hasSubmitter ? submitter.name : '');
   $('#tt-email').value(hasSubmitter ? submitter.email : '');
@@ -170,15 +172,30 @@ function showSubmission () {
 
 function showSubmissionSection () {
   $('.st-section').addClass('uv-hidden');
-  $('.ss-details').removeClass('uv-hidden');
+  $('.ss-details').removeClass('uv-hidden').find('input,textarea').focus();
   postHeightToContent();
 }
 
 function scrapeTab () {
+  loader();
   fetch(env.serviceAuthority + '/api/metadata/scrape?url=' + encodeURIComponent(url))
     .then(response => response.json())
-    .then(data => scraped(url, data))
-    .catch(err => scrapeFailed(err));
+    .then(data => {
+      scraped(url, data);
+      loader('done');
+    })
+    .catch(err => {
+      scrapeFailed(err);
+      loader('done');
+    });
+
+  function loader (state) {
+    const addWhileLoading = state !== 'done' ? 'addClass' : 'removeClass';
+    const removeWhileLoading = state !== 'done' ? 'removeClass' : 'addClass';
+    $('.ss-detail-fields')[addWhileLoading]('uv-hidden');
+    $('.ss-detail-loading')[removeWhileLoading]('uv-hidden');
+    postHeightToContent();
+  }
 }
 
 function text (el, value) {
@@ -433,4 +450,28 @@ function prettifyUrl (url) {
     .replace(rprotocol, '')
     .replace(rextensionurl, '')
     .replace(rtrailingslash, '');
+}
+
+function readKey (e = window.event) {
+  const esc = wasEscape(e);
+  if (esc) {
+    if (pickerTarget) {
+      postToContent({ command: 'cancel-pick' });
+    }
+    return;
+  }
+  const enter = wasEnter(e);
+  if (enter) {
+    if (!$('.tt-details').hasClass('uv-hidden')) {
+      saveSubmitter();
+    }
+  }
+}
+
+function wasEscape ({ key, keyCode }) {
+  return key === 'Escape' || keyCode === 27;
+}
+
+function wasEnter ({ key, keyCode }) {
+  return key === 'Enter' || keyCode === 13;
 }
