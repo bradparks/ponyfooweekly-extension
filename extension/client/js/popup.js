@@ -457,6 +457,8 @@ function readKey (e = window.event) {
   if (esc) {
     if (pickerTarget) {
       postToContent({ command: 'cancel-pick' });
+    } else {
+      closePopup();
     }
     return;
   }
