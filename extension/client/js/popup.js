@@ -172,7 +172,7 @@ function showSubmission () {
 
 function showSubmissionSection () {
   $('.st-section').addClass('uv-hidden');
-  $('.ss-details').removeClass('uv-hidden').find('input,textarea').focus();
+  $('.ss-details').removeClass('uv-hidden');
   postHeightToContent();
 }
 
@@ -237,6 +237,8 @@ function scraped (url, data) {
   updateImageSwapper();
   updateThumbnail();
   updatePreview();
+
+  $container.find('input,textarea').focus();
 
   function updateInputs () {
     $('.wa-link-title', $container).value(data.title || prettifyUrl(url));
