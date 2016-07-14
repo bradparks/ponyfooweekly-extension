@@ -239,7 +239,7 @@ function scraped (url, data) {
   }
 
   function swapperOff () {
-    var toggler = $('.wa-toggler', imageInputContainer);
+    var toggler = $('.wa-link-image-left,.wa-link-image-right', imageInputContainer);
     swapperOffEvent(toggler);
   }
 
