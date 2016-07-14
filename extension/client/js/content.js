@@ -2,6 +2,7 @@
 
 const $ = require('dominus');
 const insertRule = require('insert-rule');
+const markdownService = require('../../../../ponyfoo/services/markdown');
 const ext = chrome.extension.getURL('/').slice(0, -1);
 const z = {
   popup: 9999999,
@@ -25,11 +26,11 @@ document.addEventListener('keydown', readKey);
 chrome.extension.onMessage.addListener(readBackgroundMessage);
 
 function readFrameMessage (e) {
-  var eventOrigin = e.origin || e.originalEvent.origin;
+  const eventOrigin = e.origin || e.originalEvent.origin;
   if (eventOrigin !== ext) {
     return;
   }
-  var data = readEventData(e.data);
+  const data = readEventData(e.data);
   if (!data) {
     return;
   }
@@ -72,7 +73,7 @@ function processMessage (command, data) {
 }
 
 function tellFrameToTellMeToMinimize () {
-  var shouldMinimize = !frame.classList.contains('pfw-minimized');
+  const shouldMinimize = !frame.classList.contains('pfw-minimized');
   postToFrame({ command: 'minimize', state: shouldMinimize });
 }
 
@@ -137,7 +138,7 @@ function readEventData (data) {
 }
 
 function css (el) {
-  var api = {
+  const api = {
     set: set
   };
   return api;
@@ -180,13 +181,13 @@ function createShade (options) {
 }
 
 function shadeover (e) {
-  var el = e.target;
+  const el = e.target;
   if (el === frame) {
     return;
   }
-  var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-  var scrollLeft = document.body.scrollLeft || document.documentElement.scrollLeft;
-  var rect = el.getBoundingClientRect();
+  const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+  const scrollLeft = document.body.scrollLeft || document.documentElement.scrollLeft;
+  const rect = el.getBoundingClientRect();
 
   css(shade)
     .set('top', scrollTop + rect.top + 'px')
@@ -196,7 +197,7 @@ function shadeover (e) {
 }
 
 function shadeclick (e) {
-  var el = e.target;
+  const el = e.target;
   if (el === frame) {
     return;
   }
@@ -205,12 +206,19 @@ function shadeclick (e) {
   e.preventDefault();
   e.stopPropagation();
   removeShade();
+  return false;
 }
 
 function getValue (el) {
   let target = el;
   if (shadeOptions.selector && !el.is(shadeOptions.selector)) {
     target = el.find(shadeOptions.selector);
+  }
+  if (shadeOptions.attr === 'html-markdown') {
+    const decompilerOpts = {
+      href: location.href
+    };
+    return markdownService.decompile(target.html(), decompilerOpts);
   }
   if (shadeOptions.attr) {
     return target.attr(shadeOptions.attr);
@@ -219,7 +227,7 @@ function getValue (el) {
 }
 
 function readKey (e = window.event) {
-  var esc = wasEscape(e);
+  const esc = wasEscape(e);
   if (esc) {
     if (shade) {
       removeShade();

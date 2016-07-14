@@ -15,7 +15,7 @@ function onAction (tab) {
 
 function postToContent (data) {
   chrome.tabs.query({ active: true, currentWindow: true }, gotTabs);
-  function gotTabs (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, data);
+  function gotTabs ([tab]) {
+    chrome.tabs.sendMessage(tab.id, data);
   }
 }

@@ -1,20 +1,20 @@
 'use strict';
 
-var $ = require('dominus');
-var raf = require('raf');
-var debounce = require('lodash/debounce');
-var omnibox = require('omnibox/querystring');
-var markdownService = require('../../../../ponyfoo/services/markdown');
-var weeklyCompilerService = require('../../../../ponyfoo/services/weeklyCompiler');
-var env = require('./environment.json');
-var rprotocol = /^https?:\/\/(www\.)?/i;
-var swappers = [];
-var updatePreviewSlowly = raf.bind(null, debounce(updatePreview.bind(null, null), 100));
-var postHeightToContentSlowly = raf.bind(null, debounce(postHeightToContent, 100));
-var submitterCached = null;
-var q = omnibox.parse(location.search.slice(1));
-var url = q.url;
-var pickerTarget = null;
+const $ = require('dominus');
+const raf = require('raf');
+const debounce = require('lodash/debounce');
+const omnibox = require('omnibox/querystring');
+const markdownService = require('../../../../ponyfoo/services/markdown');
+const weeklyCompilerService = require('../../../../ponyfoo/services/weeklyCompiler');
+const env = require('./environment.json');
+const rprotocol = /^https?:\/\/(www\.)?/i;
+const swappers = [];
+const updatePreviewSlowly = raf.bind(null, debounce(updatePreview.bind(null, null), 100));
+const postHeightToContentSlowly = raf.bind(null, debounce(postHeightToContent, 100));
+const q = omnibox.parse(location.search.slice(1));
+const url = q.url;
+let submitterCached = null;
+let pickerTarget = null;
 
 $('.ss-url').text(prettifyUrl(url)).attr('data-url', url);
 $('.pp-close').on('click', closePopup);
@@ -30,8 +30,8 @@ function loaded () {
 }
 
 function popupMinimization (state) {
-  var on = state ? 'addClass' : 'removeClass';
-  var off = state ? 'removeClass' : 'addClass';
+  const on = state ? 'addClass' : 'removeClass';
+  const off = state ? 'removeClass' : 'addClass';
   $('body')[on]('pm-no-overflow');
   $('.pp-minimize')[on]('uv-hidden');
   $('.pp-maximize')[off]('uv-hidden');
@@ -40,24 +40,24 @@ function popupMinimization (state) {
   postHeightToContent();
 }
 
-function readContentMessage (e) {
-  var data = readEventData(e.data);
-  if (!data) {
+function readContentMessage ({ data }) {
+  const { command, state, value } = readEventData(data) || {};
+  if (!command) {
     return;
   }
-  if (data.command === 'minimize') {
-    popupMinimization(data.state);
+  if (command === 'minimize') {
+    popupMinimization(state);
   }
-  if (data.command === 'ask-to-resize') {
+  if (command === 'ask-to-resize') {
     postHeightToContent();
   }
-  if (data.command === 'has-picked') {
-    completeFromPicker(data.value);
+  if (command === 'has-picked') {
+    completeFromPicker(value);
   }
-  if (data.command === 'has-picked-title') {
-    completeFromPicker(data.value);
+  if (command === 'has-picked-title') {
+    completeFromPicker(value);
   }
-  if (data.command === 'end-pick') {
+  if (command === 'end-pick') {
     endMagicPick();
   }
 }
@@ -75,7 +75,7 @@ function postHeightToContent () {
 }
 
 function ready (items) {
-  var hasSubmitter = 'submitter' in items;
+  const hasSubmitter = 'submitter' in items;
   if (!hasSubmitter) {
     readySubmitter({});
   } else {
@@ -142,8 +142,8 @@ function showSubmitter () {
 }
 
 function readySubmitter (items) {
-  var hasSubmitter = 'submitter' in items;
-  var submitter = items.submitter;
+  const hasSubmitter = 'submitter' in items;
+  const submitter = items.submitter;
   $('.st-section').addClass('uv-hidden');
   $('.tt-details').removeClass('uv-hidden');
   $('.tt-cancel')[hasSubmitter ? 'removeClass' : 'addClass']('uv-hidden');
@@ -153,13 +153,13 @@ function readySubmitter (items) {
 }
 
 function saveSubmitter () {
-  var name = $('#tt-name').value();
-  var email = $('#tt-email').value();
-  var submitter = submitterCached = {
+  const name = $('#tt-name').value();
+  const email = $('#tt-email').value();
+  const submitter = submitterCached = {
     name: name,
     email: email
   };
-  var changes = { submitter: submitter };
+  const changes = { submitter: submitter };
   getBestStorage().set(changes, showSubmission);
 }
 
@@ -189,15 +189,15 @@ function text (el, value) {
 }
 
 function getCurrentTabUrl (done) {
-  var queryInfo = {
+  const queryInfo = {
     active: true,
     currentWindow: true
   };
   chrome.tabs.query(queryInfo, queriedTabs);
 
   function queriedTabs (tabs) {
-    var tab = tabs[0];
-    var url = tab.url;
+    const tab = tabs[0];
+    const url = tab.url;
     done(url);
   }
 }
@@ -209,12 +209,12 @@ function on (el, type, fn) {
 function noop () {}
 
 function scraped (url, data) {
-  var $container = $('.ss-details');
-  var firstImage = data.images && data.images[0] || '';
-  var description = (data.description || '').trim();
-  var sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
-  var imageInput = $('.wa-link-image', $container);
-  var imageInputContainer = $('.wa-link-image-container', $container);
+  const $container = $('.ss-details');
+  const firstImage = data.images && data.images[0] || '';
+  const description = (data.description || '').trim();
+  const sourceHref = 'https://twitter.com/' + (data.twitter ? data.twitter.slice(1) : '');
+  const imageInput = $('.wa-link-image', $container);
+  const imageInputContainer = $('.wa-link-image-container', $container);
 
   updateInputs();
   updateImageSwapper();
@@ -230,7 +230,7 @@ function scraped (url, data) {
   }
 
   function updateImageSwapper () {
-    var swapper = data.images.length > 1;
+    const swapper = data.images.length > 1;
     if (swapper) {
       swapperOn();
     } else {
@@ -239,15 +239,15 @@ function scraped (url, data) {
   }
 
   function swapperOff () {
-    var toggler = $('.wa-link-image-left,.wa-link-image-right', imageInputContainer);
+    const toggler = $('.wa-link-image-left,.wa-link-image-right', imageInputContainer);
     swapperOffEvent(toggler);
   }
 
   function swapperOn () {
-    var toggler = $('.wa-link-image-left,.wa-link-image-right', imageInputContainer);
-    var togglerLeft = $('.wa-link-image-left', imageInputContainer);
-    var togglerRight = $('.wa-link-image-right', imageInputContainer);
-    var index = 0;
+    const toggler = $('.wa-link-image-left,.wa-link-image-right', imageInputContainer);
+    const togglerLeft = $('.wa-link-image-left', imageInputContainer);
+    const togglerRight = $('.wa-link-image-right', imageInputContainer);
+    let index = 0;
 
     swapperOffEvent(toggler);
     togglerLeft.addClass('wa-toggler-off');
@@ -256,11 +256,11 @@ function scraped (url, data) {
     swapperOnEvent(toggler, swap);
 
     function swap (e) {
-      var $el = $(e.target);
+      const $el = $(e.target);
       if ($el.hasClass('wa-toggler-off')) {
         return;
       }
-      var left = e.target === togglerLeft[0];
+      const left = e.target === togglerLeft[0];
       index += left ? -1 : 1;
       imageInput.value(data.images[index] || '');
       invalidate(-1, togglerLeft);
@@ -270,8 +270,8 @@ function scraped (url, data) {
     }
 
     function invalidate (offset, $el) {
-      var on = typeof data.images[index + offset] === 'string';
-      var op = on ? 'removeClass' : 'addClass';
+      const on = typeof data.images[index + offset] === 'string';
+      const op = on ? 'removeClass' : 'addClass';
       $el[op]('wa-toggler-off');
     }
   }
@@ -284,12 +284,12 @@ function scraped (url, data) {
   }
 
   function swapperOffEvent (toggler) {
-    var swapper = findSwapper();
+    const swapper = findSwapper();
     toggler
       .addClass('uv-hidden')
       .off('click', swapper && swapper.fn);
     function findSwapper () {
-      for (var i = 0; i < swappers.length; i++) {
+      for (let i = 0; i < swappers.length; i++) {
         if ($(swappers[i].toggler).but(toggler).length === 0) {
           return swappers.splice(i, 1)[0];
         }
@@ -299,10 +299,10 @@ function scraped (url, data) {
 }
 
 function updateThumbnail () {
-  var $container = $('.ss-details');
-  var $image = $('.wa-link-image', $container);
-  var $imagePreview = $('.wa-link-image-preview', $container);
-  var imageValue = $image.value().trim();
+  const $container = $('.ss-details');
+  const $image = $('.wa-link-image', $container);
+  const $imagePreview = $('.wa-link-image-preview', $container);
+  const imageValue = $image.value().trim();
 
   $imagePreview.attr('src', imageValue);
 
@@ -318,8 +318,8 @@ function scrapeFailed (value) {
 }
 
 function getSectionModel () {
-  var $container = $('.ss-details');
-  var linkImageContainer = $('.wa-link-image-container', $container);
+  const $container = $('.ss-details');
+  const linkImageContainer = $('.wa-link-image-container', $container);
   return {
     type: 'link',
     subtype: 'suggestion',
@@ -348,8 +348,8 @@ function getModel () {
 }
 
 function submit () {
-  var endpoint = env.serviceAuthority + '/api/weeklies/submissions';
-  var opts = {
+  const endpoint = env.serviceAuthority + '/api/weeklies/submissions';
+  const opts = {
     method: 'POST',
     headers: new Headers({
       'Content-Type': 'application/json'
@@ -375,7 +375,7 @@ function submit () {
   function failed (messages) {
     $('.st-section').addClass('uv-hidden');
     $('.fx-failure').removeClass('uv-hidden');
-    var list = $('.fx-messages');
+    const list = $('.fx-messages');
     list.find('li').remove();
     messages.forEach(message => $('<li>')
       .text(message)
@@ -390,8 +390,8 @@ function updatePreview (err) {
     renderError(err); return;
   }
 
-  var section = getSectionModel();
-  var options = {
+  const section = getSectionModel();
+  const options = {
     markdown: markdownService,
     slug: 'extension-preview'
   };
@@ -411,8 +411,8 @@ function updatePreview (err) {
   }
 
   function parseError (err) {
-    var text = String(err.stack || err.message || err);
-    var rextensionurl = /[a-z]*-?extension:\/\/[a-z]+/ig;
+    const text = String(err.stack || err.message || err);
+    const rextensionurl = /[a-z]*-?extension:\/\/[a-z]+/ig;
     return text.replace(rextensionurl, 'ext://');
   }
 
@@ -427,8 +427,8 @@ function getBestStorage () {
 }
 
 function prettifyUrl (url) {
-  var rextensionurl = /^[a-z]*-?extension:\/\/[a-z]+/i;
-  var rtrailingslash = /\/$/;
+  const rextensionurl = /^[a-z]*-?extension:\/\/[a-z]+/i;
+  const rtrailingslash = /\/$/;
   return url
     .replace(rprotocol, '')
     .replace(rextensionurl, '')
