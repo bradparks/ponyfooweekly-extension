@@ -238,7 +238,11 @@ function scraped (url, data) {
   updateThumbnail();
   updatePreview();
 
-  $container.find('input,textarea').focus();
+  setTimeout(focus, 0);
+
+  function focus () {
+    $container.find('input,textarea').focus();
+  }
 
   function updateInputs () {
     $('.wa-link-title', $container).value(data.title || prettifyUrl(url));

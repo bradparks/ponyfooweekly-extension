@@ -1,6 +1,6 @@
 {
   "name": "ponyfooweekly-extension",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Browser extension to easily submit link suggestions to Pony Foo Weekly",
   "repository": {
     "type": "git",
