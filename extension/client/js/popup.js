@@ -1,7 +1,11 @@
 'use strict';
 
 const $ = require('dominus');
+const xhr = require('xhr');
 const raf = require('raf');
+const assign = require('assignment');
+const woofmark = require('woofmark');
+const bureaucracy = require('bureaucracy');
 const debounce = require('lodash/debounce');
 const omnibox = require('omnibox/querystring');
 const markdownService = require('../../../../ponyfoo/services/markdown');
@@ -13,6 +17,9 @@ const updatePreviewSlowly = raf.bind(null, debounce(updatePreview.bind(null, nul
 const postHeightToContentSlowly = raf.bind(null, debounce(postHeightToContent, 100));
 const q = omnibox.parse(location.search.slice(1));
 const url = q.url;
+const xhrDefaults = {
+  headers: { Accept: 'application/json' }
+};
 let submitterCached = null;
 let pickerTarget = null;
 
@@ -20,6 +27,7 @@ $('.ss-url').text(prettifyUrl(url)).attr('data-url', url);
 $('.pp-close').on('click', closePopup);
 $('.pp-minimize').on('click', () => popupMinimization(true));
 $('.pp-maximize').on('click', () => popupMinimization(false));
+textareas();
 
 on(window, 'message', readContentMessage);
 on(document, 'DOMContentLoaded', loaded);
@@ -83,6 +91,25 @@ function ready (items) {
   } else {
     submitterCached = items.submitter;
     showSubmission();
+  }
+
+  const imageInput = $('.wa-link-image');
+  const imageUpload = $.findOne('.fm-browse-image-input');
+  const bureaucrat = bureaucracy.setup(imageUpload, {
+    endpoint: env.serviceAuthority + '/api/images'
+  });
+  bureaucrat.on('valid', () => loader());
+  bureaucrat.on('ended', () => loader('done'));
+  bureaucrat.on('error', renderError);
+  bureaucrat.on('success', receivedImages);
+
+  function receivedImages ([result]) {
+    if (!result) {
+      return;
+    }
+    imageInput.value(result.href);
+    updateThumbnail();
+    updatePreview();
   }
 
   $('.tt-save').on('click', saveSubmitter);
@@ -188,14 +215,14 @@ function scrapeTab () {
       scrapeFailed(err);
       loader('done');
     });
+}
 
-  function loader (state) {
-    const addWhileLoading = state !== 'done' ? 'addClass' : 'removeClass';
-    const removeWhileLoading = state !== 'done' ? 'removeClass' : 'addClass';
-    $('.ss-detail-fields')[addWhileLoading]('uv-hidden');
-    $('.ss-detail-loading')[removeWhileLoading]('uv-hidden');
-    postHeightToContent();
-  }
+function loader (state) {
+  const addWhileLoading = state !== 'done' ? 'addClass' : 'removeClass';
+  const removeWhileLoading = state !== 'done' ? 'removeClass' : 'addClass';
+  $('.ss-detail-fields')[addWhileLoading]('uv-hidden');
+  $('.ss-detail-loading')[removeWhileLoading]('uv-hidden');
+  postHeightToContent();
 }
 
 function text (el, value) {
@@ -427,22 +454,22 @@ function updatePreview (err) {
     }
     render(html);
   }
+}
 
-  function renderError (err) {
-    console.log('The error was:', err);
-    render('<pre class="wa-error">' + parseError(err) + '</pre>');
-  }
+function renderError (err) {
+  console.log('The error was:', err);
+  render('<pre class="wa-error">' + parseError(err) + '</pre>');
+}
 
-  function parseError (err) {
-    const text = String(err.stack || err.message || err);
-    const rextensionurl = /[a-z]*-?extension:\/\/[a-z]+/ig;
-    return text.replace(rextensionurl, 'ext://');
-  }
+function parseError (err) {
+  const text = String(err.stack || err.message || err);
+  const rextensionurl = /[a-z]*-?extension:\/\/[a-z]+/ig;
+  return text.replace(rextensionurl, 'ext://');
+}
 
-  function render (html) {
-    $('.wu-preview-link').html(html);
-    postHeightToContent();
-  }
+function render (html) {
+  $('.wu-preview-link').html(html);
+  postHeightToContent();
 }
 
 function getBestStorage () {
@@ -482,4 +509,69 @@ function wasEscape ({ key, keyCode }) {
 
 function wasEnter ({ key, keyCode }) {
   return key === 'Enter' || keyCode === 13;
+}
+
+function textareas (container) {
+  $('.wk-textarea', container).forEach(convert);
+
+  function convert (el) {
+    var wel = $(el)
+    var hasHtml = wel.hasClass('wk-html');
+    var hasWysiwyg = wel.hasClass('wk-wysiwyg');
+    var editor = woofmark(el, {
+      parseMarkdown: markdownService.compile,
+      classes: {
+        wysiwyg: 'md-markdown',
+        prompts: {
+          dropicon: 'fa fa-upload'
+        },
+        dropicon: 'fa fa-upload'
+      },
+      render: {
+        modes: renderModes,
+        commands: renderCommands
+      },
+      images: {
+        url: env.serviceAuthority + '/api/images',
+        restriction: 'GIF, JPG, and PNG images'
+      },
+      xhr: ajax,
+      html: hasHtml,
+      wysiwyg: hasWysiwyg
+    });
+
+    function ajax (options, done) {
+      xhr(assign({}, xhrDefaults, options), response);
+      function response (err, res, body) {
+        res.body = body = JSON.parse(body);
+        done(err, res, body);
+      }
+    }
+
+    function renderModes (el, id) {
+      var icons = {
+        markdown: 'file-text-o',
+        html: 'file-code-o',
+        wysiwyg: 'eye'
+      };
+      renderIcon(el, icons[id] || id);
+    }
+
+    function renderCommands (el, id) {
+      var icons = {
+        quote: 'quote-right',
+        ul: 'list-ul',
+        ol: 'list-ol',
+        heading: 'header',
+        image: 'picture-o',
+        attachment: 'paperclip'
+      };
+      renderIcon(el, icons[id] || id);
+    }
+
+    function renderIcon (el, icon) {
+      $(el).addClass('wk-command-' + icon)
+      $('<i>').addClass('fa fa-' + icon).appendTo(el);
+    }
+  }
 }

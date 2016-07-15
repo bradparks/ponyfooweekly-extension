@@ -1,0 +1,45 @@
+// hides behind a @media query in ponyfoo/ponyfoo
+.wk-command
+  width inherit
+.wk-command-list-ul,
+.wk-command-list-ol,
+.wk-command-link,
+.wk-command-picture-o
+  display inline-block
+
+.wk-textarea
+  margin-top 0
+  min-height 120px
+
+.wk-commands
+  top -28px
+  text-align right
+
+.wk-prompt
+  left 20%
+  right 20%
+  background c-white
+  border-bottom none
+  box-shadow 4px 4px 9px c-bright-turquoise
+  placeholders(c-blue)
+
+.wk-prompt-upload
+  line-height 18px
+
+.wk-prompt-dragdrop
+  display none
+
+.wk-prompt-input
+  color c-black-text
+  background-color c-blue-01
+  &:focus
+    background-color c-blue-02
+
+.wk-prompt-upload,
+.wk-prompt-ok
+  background linear-gradient(to left, c-bright-turquoise 0%, c-light-turquoise 100%)
+  &:hover
+    background c-bright-turquoise
+
+.wk-prompt-cancel:hover
+  border-bottom-color c-blue

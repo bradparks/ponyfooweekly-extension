@@ -68,20 +68,28 @@
                   <img class='wa-link-image-preview uv-hidden' alt='' />
                   <span class='wa-toggler wa-link-image-left fa fa-arrow-left uv-hidden'></span>
                   <span class='wa-toggler wa-link-image-right fa fa-arrow-right uv-hidden'></span>
+                  <span class='fm-browse-images-wrapper'>
+                    <span title='Pull a thumbnail image from your computer’s drive!' class='fm-browse-images wa-toggler fa fa-picture-o'></span>
+                    <input class='wk-prompt-fileupload fm-browse-image-input' id='browser-image-fup' type='file'>
+                  </span>
                   <a title='Pull a thumbnail image from an element on the page!' class='fm-picker fm-picker-image wa-toggler fa fa-magic' data-attr='src' data-selector='img'></a>
                 </span>
               </div>
             </div>
 
-            <div class='fm-field'>
+            <div class='fm-field fm-textarea-field'>
               <label for='ss-description'>Link Description</label>
-              <textarea id='ss-description' class='wa-link-description' placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.'></textarea>
+              <div>
+                <textarea id='ss-description' class='wk-textarea wa-link-description' placeholder='Describe the link here using a few lines explaining what readers will find inside. Markdown is supported.'></textarea>
+              </div>
               <a title='Pull a description from an element on the page!' class='fm-picker wa-toggler fa fa-magic' data-attr='html-markdown'></a>
             </div>
 
-            <div class='fm-field'>
+            <div class='fm-field fm-textarea-field'>
               <label for='ss-comments'>Your Comments</label>
-              <textarea id='ss-comments' class='wa-submitter-comments' placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.'></textarea>
+              <div>
+                <textarea id='ss-comments' class='wk-textarea wa-submitter-comments' placeholder='Do you have any comments for us? The Pony Foo audience can’t read these comments.'></textarea>
+              </div>
             </div>
           </section><!--
 

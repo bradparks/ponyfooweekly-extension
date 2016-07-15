@@ -7,6 +7,9 @@
   &:first-child
     margin-top 0
 
+.fm-textarea-field
+  margin-top 25px
+
 .fm-picker,
 .fm-title-picker
   top initial
@@ -18,3 +21,19 @@
 
 .fm-title-picker
   right 22px
+
+.fm-browse-images-wrapper
+  position absolute
+  cursor pointer
+  bottom 0
+  right calc(100% + 22px)
+  &:hover .fm-browse-images
+    background-color c-bright-turquoise
+
+.fm-browse-images
+  position static
+  width 22px
+
+.fm-browse-image-input
+  left 0
+

@@ -30,12 +30,16 @@
     ]
   },
   "dependencies": {
+    "assignment": "2.2.0",
+    "bureaucracy": "1.0.5",
     "dominus": "6.0.1",
     "insert-rule": "2.1.0",
     "lodash": "4.13.1",
     "normalize.css": "4.2.0",
     "omnibox": "1.0.0",
-    "raf": "3.2.0"
+    "raf": "3.2.0",
+    "woofmark": "4.2.1",
+    "xhr": "2.2.1"
   },
   "devDependencies": {
     "babel-preset-es2015": "6.9.0",
