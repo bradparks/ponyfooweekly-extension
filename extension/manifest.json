@@ -1,6 +1,6 @@
 {
   "name": "Pony Foo Weekly Link Submissions",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Easily submit link suggestions to Pony Foo Weekly",
   "homepage_url": "https://github.com/ponyfoo/ponyfooweekly-extension",
   "manifest_version": 2,
