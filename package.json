@@ -15,7 +15,8 @@
   "scripts": {
     "copy": "build/copy",
     "start": "build/build-development",
-    "build": "build/build-production"
+    "build": "build/build-production",
+    "build-ff-testbed": "build/build-ff-testbed"
   },
   "browserify": {
     "transform": [

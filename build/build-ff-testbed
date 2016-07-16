@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd ../ponyfoo
+npm install
+cd ../ponyfooweekly-extension
+npm install
+npm run build
