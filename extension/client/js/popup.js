@@ -100,7 +100,12 @@ function ready (items) {
   });
   bureaucrat.on('valid', () => loader());
   bureaucrat.on('ended', () => loader('done'));
-  bureaucrat.on('error', renderError);
+  bureaucrat.on('error', err => {
+    if (err) {
+      renderError(err);
+    }
+    loader('done');
+  });
   bureaucrat.on('success', receivedImages);
 
   function receivedImages ([result]) {
