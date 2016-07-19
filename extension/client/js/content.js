@@ -218,10 +218,11 @@ function getValue (el) {
     target = el.find(shadeOptions.selector);
   }
   if (shadeOptions.attr === 'html-markdown') {
+    const rnewline = /\r?\n+/g;
     const decompilerOpts = {
       href: location.href
     };
-    return markdownService.decompile(target.html(), decompilerOpts);
+    return markdownService.decompile(target.html().replace(rnewline, ' '), decompilerOpts);
   }
   if (shadeOptions.attr) {
     return target.attr(shadeOptions.attr);
