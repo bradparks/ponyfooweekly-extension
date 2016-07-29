@@ -81,7 +81,7 @@ function readEventData (data) {
 }
 
 function postHeightToContent () {
-  postToContent({ command: 'resize', height: document.body.scrollHeight });
+  postToContent({ command: 'resize', height: document.body.offsetHeight });
 }
 
 function ready (items) {

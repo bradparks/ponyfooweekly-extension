@@ -97,6 +97,7 @@ function autosizeFrame () {
 }
 
 function resizeFrame (height) {
+  console.log('resizeFrame',height);
   if (frame) {
     frame.style.height = height + 'px';
   }
