@@ -3,3 +3,4 @@ extension/js
 extension/css
 extension/fonts
 *.zip
+.DS_Store
