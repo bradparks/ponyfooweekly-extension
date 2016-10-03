@@ -11,19 +11,18 @@ body:before
     top 0
     left 0
     content ''
+    z-index z-popup-shade
 
   &:before
     right 0
     height 14px
     background linear-gradient(to left, c-white 0, c-yellow-highlight 33%, c-dark-orange 66%, c-pink 100%)
     border-bottom 10px solid c-white
-    z-index 1
 
   &:after
     bottom 0
     width 4px
     background linear-gradient(to top, c-white 0, c-yellow-highlight 33%, c-dark-orange 66%, c-pink 100%)
-    z-index 1
 
 .pm-minimized .st-section
   display none !important
